@@ -41,6 +41,11 @@
     [self performSegueWithIdentifier:@"detail" sender:indexPath];
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIViewController *destVc = segue.destinationViewController;
+    destVc.navigationItem.title = @"table view detail";
+    
+}
 
 
 /*
