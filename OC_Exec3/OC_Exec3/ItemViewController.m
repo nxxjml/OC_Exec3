@@ -8,9 +8,12 @@
 
 #import "ItemViewController.h"
 //#import "ViewController.h"
+#import "basicCellTableViewCell.h"
+#import "ImageCell.h"
 
 @interface ItemViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) NSArray *dict;
 
 @end
 
@@ -21,7 +24,8 @@
     // Do any additional setup after loading the view.
    // ViewController *vC;
    // [self doHttpGetParserJsonResp];
-
+    self.dict = [self doHttpGetParserJsonResp];
+    
     
 }
 
@@ -31,12 +35,23 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return self.dict.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"basicCell"];
-    cell.textLabel.text = @"Item1";
+    ImageCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell"];
+    
+    cell.titleLabel.text = self.dict[indexPath.row][@"student"][@"id"];
+    cell.subtitleLabel.text = self.dict[indexPath.row][@"student"][@"name"];
+    
+    NSString *baseUrl = @"http://192.168.1.47:8080/";
+    NSString *imageType = @".jpg";
+    NSString *imageFileName = [self.dict[indexPath.row][@"student"][@"id"] stringByAppendingString:imageType];
+    NSString *url = [baseUrl stringByAppendingString:imageFileName];
+    
+    
+    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:url]]];
+   [cell.customImageView setImage: image];
     
     return cell;
 }
@@ -48,10 +63,15 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController *destVc = segue.destinationViewController;
-    NSDictionary *dict = [self doHttpGetParserJsonResp];
+    //NSDictionary *dict = [self doHttpGetParserJsonResp];
     //destVc.navigationItem.title = @"table view detail";
-    NSLog(@"%@",dict[@"final"][@"in"]);
-    destVc.navigationItem.title = dict[@"final"][@"in"];
+    //NSArray *dict = [self doHttpGetParserJsonResp];
+    //NSLog(@"%@",dict[@"final"][@"in"]);
+    //destVc.navigationItem.title = dict[@"final"][@"in"];
+    NSIndexPath * senderIndex = sender;
+    
+    NSLog(@"%@",self.dict);//[0][@"student"][@"id"]);
+    destVc.navigationItem.title = self.dict[senderIndex.row][@"student"][@"name"];
     //NSLog(@"adf");
     //NSLog(@"%@", response);
     
@@ -60,7 +80,8 @@
 
 
 //- (NSDictionary *)doHttpGetParserJsonResp:(NSDictionary *) resData {
-- (NSDictionary *) doHttpGetParserJsonResp {
+//- (NSDictionary *) doHttpGetParserJsonResp {
+- (NSArray *) doHttpGetParserJsonResp {
     NSString *URL_TEST = @"http://192.168.1.47:8080/index.php?name=json_test";
     // NSString *text1 = @"";
     //NSString *text = [text1 stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
@@ -74,8 +95,13 @@
     //__block NSDictionary *tmpData;
     //send synchronouse request
     NSData *returnData = [NSURLConnection sendSynchronousRequest:urlRequest returningResponse:nil error:nil];
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData options:NSJSONReadingAllowFragments error:&error];
-    return json;
+    
+    //NSDictionary *json = [NSJSONSerialization JSONObjectWithData:returnData options:NSJSONReadingAllowFragments error:&error];
+    //return json;
+    //NSLog(@"before convert");
+    NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData:returnData options:NSJSONReadingAllowFragments error:&error];
+    //NSLog(@"after");
+    return jsonArray;
     /*
     NSOperationQueue *queue = [NSOperationQueue mainQueue];
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:queue completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
