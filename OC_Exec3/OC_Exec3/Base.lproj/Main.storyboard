@@ -165,10 +165,10 @@
             </objects>
             <point key="canvasLocation" x="3586" y="741"/>
         </scene>
-        <!--Item3-->
+        <!--Register-->
         <scene sceneID="8PZ-Qf-WvF">
             <objects>
-                <viewController title="Item3" id="swP-mF-W0m" sceneMemberID="viewController">
+                <viewController title="Register" id="swP-mF-W0m" customClass="RegisterViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="h3m-DJ-L7l"/>
                         <viewControllerLayoutGuide type="bottom" id="rsV-jc-Wyn"/>
@@ -176,9 +176,40 @@
                     <view key="view" contentMode="scaleToFill" id="W09-zI-xOC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5oS-0E-3qy">
+                                <rect key="frame" x="271" y="157" width="59" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ID" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hup-JY-Jja">
+                                <rect key="frame" x="283" y="206" width="35" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fqn-He-VKC">
+                                <rect key="frame" x="285" y="278" width="30" height="30"/>
+                                <state key="normal" title="Add"/>
+                                <connections>
+                                    <action selector="add:" destination="swP-mF-W0m" eventType="touchUpInside" id="fL9-eh-stn"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="fqn-He-VKC" firstAttribute="centerX" secondItem="W09-zI-xOC" secondAttribute="centerX" id="1BJ-Li-Amj"/>
+                            <constraint firstItem="Hup-JY-Jja" firstAttribute="top" secondItem="5oS-0E-3qy" secondAttribute="bottom" constant="19" id="NYn-kU-a1u"/>
+                            <constraint firstItem="Hup-JY-Jja" firstAttribute="centerX" secondItem="W09-zI-xOC" secondAttribute="centerX" id="jDW-do-zkj"/>
+                            <constraint firstItem="5oS-0E-3qy" firstAttribute="centerX" secondItem="W09-zI-xOC" secondAttribute="centerX" id="k5Z-UF-5DB"/>
+                            <constraint firstItem="fqn-He-VKC" firstAttribute="top" secondItem="Hup-JY-Jja" secondAttribute="bottom" constant="42" id="sof-qb-btm"/>
+                            <constraint firstItem="5oS-0E-3qy" firstAttribute="top" secondItem="h3m-DJ-L7l" secondAttribute="bottom" constant="137" id="xVc-1E-WM3"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="43V-qH-pyf"/>
+                    <connections>
+                        <outlet property="id" destination="Hup-JY-Jja" id="1bo-2d-OW0"/>
+                        <outlet property="name" destination="5oS-0E-3qy" id="LOT-Oj-8eg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="98X-Eo-SGB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
